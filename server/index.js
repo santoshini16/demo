@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/userRoute');
 const quizRouter = require('./routes/quizRoute');
+const analyticsRoute = require('./routes/analyticsRoute');
 const app = express();
 const dotenv = require('dotenv').config();
 const PORT =  3000
@@ -16,6 +17,7 @@ app.use(express.json())
 
 app.use('/user',userRouter);
 app.use('/api',quizRouter);
+app.use('/api',analyticsRoute);
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
     console.log('mongodb connected');

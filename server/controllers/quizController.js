@@ -121,6 +121,7 @@ const deleteQuiz = async (req, res) => {
   }
 };
 
+// Update a quiz by ID
 const updateQuiz = async (req, res) => {
   try {
     const { quizId } = req.params;
@@ -181,6 +182,7 @@ const updateQuiz = async (req, res) => {
   }
 };
 
+// Play a quiz and calculate the score
 const playQuiz = async (req, res) => {
   try {
     const { quizId, userResponses } = req.body;
@@ -252,6 +254,38 @@ const playQuiz = async (req, res) => {
   }
 };
 
+// Increase impression count for a quiz
+const increaseImpressionOnQuiz = async (req, res) => {
+  try {
+    const { quizId } = req.params;
+
+    const quiz = await Quiz.findById(quizId);
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found!" });
+    }
+
+    await quiz.updateOne({ $inc: { impressions: 1 } });
+
+    return res.status(200).json({ message: "Impression count updated successfully!" });
+  } catch (error) {
+    console.error("Error increasing impression count:", error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
+
+// Get trending quizzes based on impressions
+const getTrendingQuizzes = async (req, res) => {
+  try {
+    const trendingQuizzes = await Quiz.find()
+      .sort({ impressions: -1 }) // Sort by impressions in descending order
+      .limit(10); // Limit to top 10 trending quizzes
+
+    return res.status(200).json(trendingQuizzes);
+  } catch (error) {
+    console.error("Error fetching trending quizzes:", error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
 
 module.exports = {
   createQuiz,
@@ -259,8 +293,11 @@ module.exports = {
   deleteOption,
   deleteQuiz,
   updateQuiz,
-  playQuiz
+  playQuiz,
+  increaseImpressionOnQuiz,
+  getTrendingQuizzes,
 };
+
 
 
 
