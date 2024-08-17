@@ -181,6 +181,76 @@ const updateQuiz = async (req, res) => {
   }
 };
 
+const playQuiz = async (req, res) => {
+  try {
+    const { quizId, userResponses } = req.body;
+
+    // Validate input
+    if (!quizId || !Array.isArray(userResponses)) {
+      return res.status(400).json({ message: "Quiz ID and user responses are required." });
+    }
+
+    // Find the quiz
+    const quiz = await Quiz.findById(quizId).populate('questions');
+    if (!quiz) {
+      return res.status(404).json({ message: "Quiz not found!" });
+    }
+
+    let score = 0;
+
+    // Process the user responses based on quiz type
+    if (quiz.quizType === 'QA') {
+      // QA Quiz
+      for (const response of userResponses) {
+        const question = await Question.findById(response.questionId);
+        if (!question) {
+          continue; // Skip if the question is not found
+        }
+
+        if (response.chosenAnswer === question.correctAnswer) {
+          score += 1; // Increment score if the answer is correct
+          await question.updateOne({ $inc: { answeredCorrectly: 1 } });
+        } else {
+          await question.updateOne({ $inc: { answeredIncorrectly: 1 } });
+        }
+
+        await question.updateOne({ $inc: { attempts: 1 } });
+      }
+    } else if (quiz.quizType === 'POLL') {
+      // POLL Quiz
+      for (const response of userResponses) {
+        const question = await Question.findById(response.questionId);
+        if (!question) {
+          continue; // Skip if the question is not found
+        }
+
+        switch (response.chosenAnswer) {
+          case 1:
+            await question.updateOne({ $inc: { optedPollOption1: 1 } });
+            break;
+          case 2:
+            await question.updateOne({ $inc: { optedPollOption2: 1 } });
+            break;
+          case 3:
+            await question.updateOne({ $inc: { optedPollOption3: 1 } });
+            break;
+          case 4:
+            await question.updateOne({ $inc: { optedPollOption4: 1 } });
+            break;
+          default:
+            return res.status(400).json({ message: "Invalid poll option selected." });
+        }
+      }
+    } else {
+      return res.status(400).json({ message: "Invalid quiz type." });
+    }
+
+    return res.status(200).json({ message: "Quiz played successfully!", score });
+  } catch (error) {
+    console.error("Error playing quiz:", error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
 
 
 module.exports = {
@@ -189,6 +259,7 @@ module.exports = {
   deleteOption,
   deleteQuiz,
   updateQuiz,
+  playQuiz
 };
 
 
