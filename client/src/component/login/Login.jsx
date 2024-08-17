@@ -25,47 +25,52 @@ export const Login = () => {
 
   const loginUser = async (e) => {
     e.preventDefault();
-
+  
     const error = {};
     setError(error);
-
+  
     setErrorResponse("");
-
+  
     if (!email) {
       error.emailErr = "Email is required!";
     }
-
+  
     if (!password) {
       error.passwordErr = "Password is required!";
       return;
     }
-
+  
     try {
-      // dispatch(loginStart());
       setLoading(true);
       const res = await newRequest.post("user/login", {
         email,
         password,
       });
-
+  
+      // Log the response to check if data is received correctly
+      console.log("Response data: ", res.data);
+  
       const { token, userId, username } = res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
       localStorage.setItem("username", username);
-      localStorage.setItem("token", token);
-      dispatch(setCurrentUser({ userId, username }));
+  
+      // Dispatch actions to update Redux state
+      dispatch(setCurrentUser({ userId, username,token }));
       dispatch(setIsAuthenticated(true));
+  
+      // Log before navigating
+      console.log("Navigating to dashboard");
       toast.success("Logged in successfully!");
-      navigate("/");
+      navigate("/dashboard");
+      
       setLoading(false);
     } catch (error) {
-      // console.log(error);
       setErrorResponse(error?.response?.data?.message);
       setLoading(false);
-      // dispatch(loginFailure());
     }
   };
-
+  
   // console.log(errorResponse);
 
   return (
