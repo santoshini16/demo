@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../register/Register.module.css";
-// import { loginSuccess } from "../../redux/userSlice";
-// import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsAuthenticated,setCurrentUser } from "../../configureSlice/reduxSlice";
 import newRequest from "../../utils/newRequest";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +12,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [error, setError] = useState({
@@ -48,8 +48,13 @@ export const Login = () => {
         password,
       });
 
-      // console.log(res.data);
-    //   dispatch(loginSuccess(res.data));
+      const { token, userId, username } = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("username", username);
+      localStorage.setItem("token", token);
+      dispatch(setCurrentUser({ userId, username }));
+      dispatch(setIsAuthenticated(true));
       toast.success("Logged in successfully!");
       navigate("/");
       setLoading(false);
