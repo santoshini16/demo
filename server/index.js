@@ -1,11 +1,15 @@
 const express = require('express');
 const { mongoose } = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/userRoute');
 const app = express();
 const dotenv = require('dotenv').config();
 const PORT =  3000
-
+app.use(cors({
+    origin: 'http://localhost:5173',  
+    credentials: true,                
+  }));
 app.use(bodyParser.json());
 app.use(express.json())
 
