@@ -200,13 +200,15 @@ const updateQuiz = async (req, res) => {
     }
 
     const realQuiz = await Quiz.findById(quizId);
+    console.log(realQuiz)
     if (!realQuiz) {
       return res.status(404).json({ message: "Quiz not found!" });
     }
+    
 
-    if (realQuiz.userId.toString() !== user._id.toString()) {
-      return res.status(403).json({ message: "Action forbidden!" });
-    }
+    // if (realQuiz._id.toString() !== user.userId.toString()) {
+    //   return res.status(403).json({ message: "Action forbidden!" });
+    // }
 
     // Create new questions and get their IDs
     const questionIds = await Promise.all(
