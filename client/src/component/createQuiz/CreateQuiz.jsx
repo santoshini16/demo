@@ -132,7 +132,7 @@ const Quiz1 = ({
 };
 
 const QuizCreated = ({ quizType, quizId }) => {
-  const localUrl = `http://localhost:3000/api/playquiz/${quizId}`; // Use local URL for now
+  const localUrl = `http://localhost:5173/playquiz/${quizId}`; // Use local URL for now
 
   const shareQuiz = () => {
     if (quizId) {

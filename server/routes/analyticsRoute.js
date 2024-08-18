@@ -16,10 +16,10 @@ router.get('/quizzes', verifyToken, getAllMyQuizzes);
 router.get('/questions/:questionId', verifyToken, getSingleQuestion);
 
 // Route to get a single quiz by ID
-router.get('/quizzes/:quizId', verifyToken, getSingleQuiz);
+router.get('/quizzes/:quizId', getSingleQuiz);
 
 // Route to get all questions of a specific quiz for question-wise analysis
-router.get('/quizzes/:quizId/questions', verifyToken, getAllQuestionsOfAQuiz);
+router.get('/quizzes/questions/:quizId', getAllQuestionsOfAQuiz);
 
 // Route to get dashboard information
 router.get('/dashboard', verifyToken, getDashboardInfo);

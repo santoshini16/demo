@@ -121,31 +121,96 @@ const deleteQuiz = async (req, res) => {
   }
 };
 
-// Update a quiz by ID
+// Play a quiz
+const playQuiz = async (req, res) => {
+  try {
+    const { quizType, questions } = req.body;
+
+    let score = 0;
+
+    // when quizType is QA
+    if (quizType === "QA") {
+      await Promise.all(
+        questions.map(async (q) => {
+          const ques = await Question.findById(q.questionId);
+
+          if (!ques) {
+            return res.status(404).json({ message: "Question not found!" });
+          }
+
+          if (q.chosenAnswer === ques.correctAnswer) {
+            await ques.updateOne({ $inc: { answedCorrectly: 1 } });
+            score += 1;
+          } else {
+            await ques.updateOne({ $inc: { answerdIncorrectly: 1 } });
+          }
+
+          await ques.updateOne({ $inc: { attempts: 1 } });
+        })
+      );
+    }
+
+    // when quizType is POLL
+    if (quizType === "POLL") {
+      await Promise.all(
+        questions.map(async (q) => {
+          const ques = await Question.findById(q.questionId);
+
+          if (!ques) {
+            return res.status(404).json({ message: "Question not found!" });
+          }
+
+          switch (q.chosenAnswer) {
+            case 1:
+              await ques.updateOne({ $inc: { optedPollOption1: 1 } });
+              break;
+            case 2:
+              await ques.updateOne({ $inc: { optedPollOption2: 1 } });
+              break;
+            case 3:
+              await ques.updateOne({ $inc: { optedPollOption3: 1 } });
+              break;
+            case 4:
+              await ques.updateOne({ $inc: { optedPollOption4: 1 } });
+              break;
+            default:
+              break;
+          }
+        })
+      );
+    }
+
+    res.status(200).json({ message: "Quiz played successfully!", score });
+  } catch (error) {
+    console.error("Error playing quiz:", error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
+
+// Edit a quiz
 const updateQuiz = async (req, res) => {
   try {
+    const { timer, optionType, questions } = req.body;
     const { quizId } = req.params;
-    const { quizName, quizType, timer, optionType, questions } = req.body;
-
-    // Validate required fields
-    if (!quizName || !quizType) {
-      return res.status(400).json({ message: "Quiz name and quiz type are required." });
-    }
-    if (!["QA", "POLL"].includes(quizType)) {
-      return res.status(400).json({ message: "Invalid quiz type." });
-    }
-    if (!["text", "image", "textImage"].includes(optionType)) {
-      return res.status(400).json({ message: "Invalid option type." });
+    console.log(quizId)
+    const user = req.user;
+    console.log(user)
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
     }
 
-    // Handle question objects and convert them to ObjectIds
+    const realQuiz = await Quiz.findById(quizId);
+    if (!realQuiz) {
+      return res.status(404).json({ message: "Quiz not found!" });
+    }
+
+    if (realQuiz.userId.toString() !== user._id.toString()) {
+      return res.status(403).json({ message: "Action forbidden!" });
+    }
+
+    // Create new questions and get their IDs
     const questionIds = await Promise.all(
       questions.map(async (q) => {
-        // If the question has an _id, assume it's already in the database
-        if (q._id) {
-          return q._id;
-        }
-        // Otherwise, create a new question and return its _id
         const newQuestion = await Question.create({
           question: q.question,
           quizType: q.quizType,
@@ -158,98 +223,23 @@ const updateQuiz = async (req, res) => {
       })
     );
 
-    // Clear the existing questions array before updating
+    // Update the quiz with new data
     const updatedQuiz = await Quiz.findByIdAndUpdate(
       quizId,
       {
-        quizName,
-        quizType,
-        timer: timer || 0, // Default to 0 if not provided
+        timer,
         optionType,
-        questions: questionIds, // Replace with new questions
+        questions: questionIds,
       },
-      { new: true }
+      { new: true } // Return the updated document
     );
 
-    if (!updatedQuiz) {
-      return res.status(404).json({ message: "Quiz not found!" });
-    }
-
-    return res.status(200).json(updatedQuiz);
+    return res.status(200).json({
+      message: "Quiz updated successfully!",
+      quiz: updatedQuiz,
+    });
   } catch (error) {
     console.error("Error updating quiz:", error);
-    return res.status(500).json({ message: "Internal server error." });
-  }
-};
-
-// Play a quiz and calculate the score
-const playQuiz = async (req, res) => {
-  try {
-    const { quizId, userResponses } = req.body;
-
-    // Validate input
-    if (!quizId || !Array.isArray(userResponses)) {
-      return res.status(400).json({ message: "Quiz ID and user responses are required." });
-    }
-
-    // Find the quiz
-    const quiz = await Quiz.findById(quizId).populate('questions');
-    if (!quiz) {
-      return res.status(404).json({ message: "Quiz not found!" });
-    }
-
-    let score = 0;
-
-    // Process the user responses based on quiz type
-    if (quiz.quizType === 'QA') {
-      // QA Quiz
-      for (const response of userResponses) {
-        const question = await Question.findById(response.questionId);
-        if (!question) {
-          continue; // Skip if the question is not found
-        }
-
-        if (response.chosenAnswer === question.correctAnswer) {
-          score += 1; // Increment score if the answer is correct
-          await question.updateOne({ $inc: { answeredCorrectly: 1 } });
-        } else {
-          await question.updateOne({ $inc: { answeredIncorrectly: 1 } });
-        }
-
-        await question.updateOne({ $inc: { attempts: 1 } });
-      }
-    } else if (quiz.quizType === 'POLL') {
-      // POLL Quiz
-      for (const response of userResponses) {
-        const question = await Question.findById(response.questionId);
-        if (!question) {
-          continue; // Skip if the question is not found
-        }
-
-        switch (response.chosenAnswer) {
-          case 1:
-            await question.updateOne({ $inc: { optedPollOption1: 1 } });
-            break;
-          case 2:
-            await question.updateOne({ $inc: { optedPollOption2: 1 } });
-            break;
-          case 3:
-            await question.updateOne({ $inc: { optedPollOption3: 1 } });
-            break;
-          case 4:
-            await question.updateOne({ $inc: { optedPollOption4: 1 } });
-            break;
-          default:
-            return res.status(400).json({ message: "Invalid poll option selected." });
-        }
-      }
-    } else {
-      return res.status(400).json({ message: "Invalid quiz type." });
-    }
-
-    return res.status(200).json({ message: "Quiz played successfully!", score });
-  } catch (error) {
-    console.error("Error playing quiz:", error);
     return res.status(500).json({ message: "Internal server error." });
   }
 };
@@ -297,6 +287,7 @@ module.exports = {
   increaseImpressionOnQuiz,
   getTrendingQuizzes,
 };
+
 
 
 
