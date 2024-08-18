@@ -3,7 +3,8 @@ import { Modal } from "@mantine/core";
 import styles from "./createQuiz.module.css";
 import { QA } from "../QA/QA";
 import { Poll } from "../poll/Poll";
-import toast from "react-hot-toast";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const CreateQuiz = ({ openCreateQuizModal, setOpenCreateQuizModal }) => {
   // 0 means Q&A, 1 means Poll
@@ -13,10 +14,11 @@ export const CreateQuiz = ({ openCreateQuizModal, setOpenCreateQuizModal }) => {
   const [showComponent, setShowComponent] = useState(0);
 
   const [quizName, setQuizName] = useState("");
-  const [quizId, setQuizId] = useState("");
+  const [quizId, setQuizId] = useState(""); // Initially an empty string
 
   const [err, seterr] = useState("");
-  const handleContinueToQuiz1 = (e) => {
+
+  const handleContinueToQuiz1 = () => {
     seterr("");
 
     if (!quizName) {
@@ -55,7 +57,7 @@ export const CreateQuiz = ({ openCreateQuizModal, setOpenCreateQuizModal }) => {
             setShowComponent={setShowComponent}
             quizName={quizName}
             quizType="QA"
-            setQuizId={setQuizId}
+            setQuizId={setQuizId} // Ensure this sets quizId from API response
           />
         ) : (
           <Poll
@@ -64,7 +66,7 @@ export const CreateQuiz = ({ openCreateQuizModal, setOpenCreateQuizModal }) => {
             setShowComponent={setShowComponent}
             quizName={quizName}
             quizType="POLL"
-            setQuizId={setQuizId}
+            setQuizId={setQuizId} // Ensure this sets quizId from API response
           />
         ))}
 
@@ -130,12 +132,15 @@ const Quiz1 = ({
 };
 
 const QuizCreated = ({ quizType, quizId }) => {
-  const shareQuiz = () => {
-    navigator.clipboard.writeText(
-      `https://quizzie-six.vercel.app/playquiz/${quizId}`
-    );
+  const localUrl = `http://localhost:3000/api/playquiz/${quizId}`; // Use local URL for now
 
-    toast.success("Link copied to clipboard");
+  const shareQuiz = () => {
+    if (quizId) {
+      navigator.clipboard.writeText(localUrl); // Copy the local URL to clipboard
+      toast.success("Link copied to clipboard");
+    } else {
+      toast.error("Quiz ID is not available.");
+    }
   };
 
   return (
@@ -145,19 +150,24 @@ const QuizCreated = ({ quizType, quizId }) => {
         <p>Published</p>
       </div>
 
-      <input
-        type="text"
-        placeholder={`Your ${quizType === 0 ? "quiz" : "poll"} link is here`}
-        className={styles.quizNameInput}
-        readOnly
-        value={`https://quizzie-six.vercel.app/playQuiz/${quizId}`}
-      />
-
-      <div className={styles.shareBtnDiv}>
-        <button className={styles.shareBtn} onClick={shareQuiz}>
-          Share
-        </button>
-      </div>
+      {quizId ? (
+        <>
+          <input
+            type="text"
+            placeholder={`Your ${quizType === 0 ? "quiz" : "poll"} link is here`}
+            className={styles.quizNameInput}
+            readOnly
+            value={localUrl} // Display the local URL
+          />
+          <div className={styles.shareBtnDiv}>
+            <button className={styles.shareBtn} onClick={shareQuiz}>
+              Share
+            </button>
+          </div>
+        </>
+      ) : (
+        <p>Quiz ID not available. Please try again.</p>
+      )}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import convertToK from "../../utils/convertToK";
 import Sidebar from "../../component/sidebar/Sidebar";
 
+
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({});
   const { currentUser } = useSelector((state) => state.auth); 
@@ -65,7 +66,7 @@ const Dashboard = () => {
           backgroundColor: "white",
         }}
       >
-        <Sidebar />
+        <Sidebar/>
       </div>
       <div style={{ flex: 5, marginLeft: "13rem" }}>
         <div className={styles.dashboard}>

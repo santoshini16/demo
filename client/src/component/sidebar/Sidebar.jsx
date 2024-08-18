@@ -7,7 +7,7 @@ import newRequest from "../../utils/newRequest";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const { pathname } = useLocation();
   const [openCreateQuizModal, setOpenCreateQuizModal] = useState(false);
 
@@ -81,3 +81,4 @@ export const Sidebar = () => {
     </div>
   );
 };
+export default Sidebar;
