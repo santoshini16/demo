@@ -121,7 +121,6 @@ const deleteQuiz = async (req, res) => {
   }
 };
 
-// Play a quiz
 const playQuiz = async (req, res) => {
   try {
     const { quizType, questions } = req.body;
@@ -139,10 +138,10 @@ const playQuiz = async (req, res) => {
           }
 
           if (q.chosenAnswer === ques.correctAnswer) {
-            await ques.updateOne({ $inc: { answedCorrectly: 1 } });
+            await ques.updateOne({ $inc: { answeredCorrectly: 1 } });  // Correct field name
             score += 1;
           } else {
-            await ques.updateOne({ $inc: { answerdIncorrectly: 1 } });
+            await ques.updateOne({ $inc: { answeredIncorrectly: 1 } }); // Correct field name
           }
 
           await ques.updateOne({ $inc: { attempts: 1 } });
@@ -186,6 +185,7 @@ const playQuiz = async (req, res) => {
     return res.status(500).json({ message: "Internal server error." });
   }
 };
+
 
 // Edit a quiz
 const updateQuiz = async (req, res) => {

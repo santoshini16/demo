@@ -215,7 +215,7 @@ const MyFunction = ({ analytic, i }) => {
       </td>
       <td>
         <Link
-          to={`/dashboard/analytics/questionWise/${analytic._id}`}
+          to={`/questionWise/${analytic._id}`}
           className={styles.link}
         >
           <span className={styles.questionWise}>Question Wise Analysis</span>
