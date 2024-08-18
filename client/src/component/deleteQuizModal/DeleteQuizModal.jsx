@@ -11,8 +11,13 @@ export const DeleteQuizModal = ({
   quId,
 }) => {
   const handleDeleteQuiz = async () => {
+    const token = localStorage.getItem("token");
     try {
-      const res = await newRequest.delete(`quiz/${quId}`);
+      const res = await newRequest.delete(`api/quiz/${quId}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       toast.success(res?.data?.message);
       setOpenDeleteQuizModal(false);
     } catch (error) {

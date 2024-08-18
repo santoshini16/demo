@@ -3,7 +3,7 @@ import styles from "./Dashboard.module.css";
 import { QuizzesComp } from "../../component/quizzesComp/QuizzesComp";
 import newRequest from "../../utils/newRequest";
 import { useSelector } from "react-redux";
-import convertToK from "../../utils/convertToK";
+import formatToken from "../../utils/formatToken";
 import Sidebar from "../../component/sidebar/Sidebar";
 
 
@@ -12,7 +12,7 @@ const Dashboard = () => {
   const { currentUser } = useSelector((state) => state.auth); 
 
   useEffect(() => {
-    const fetchD = async () => {
+    const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
         const res = await newRequest.get("/api/dashboard", {
@@ -26,7 +26,7 @@ const Dashboard = () => {
       }
     };
     if (currentUser) {
-      fetchD();
+      fetchData();
     }
   }, [currentUser]);
 
@@ -87,7 +87,7 @@ const Dashboard = () => {
 
             <div className={styles.singleContent} style={{ color: "blue" }}>
               <p className={styles.heading}>
-                <span>{convertToK(dashboardData?.totalImpressions)} </span> Total
+                <span>{formatToken(dashboardData?.totalImpressions)} </span> Total
               </p>
               <p className={styles.para}>Impressions</p>
             </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./quizzesComp.module.css";
 import formatDate from "../../utils/formatDate";
-import convertToK from "../../utils/convertToK";
+import convertToK from "../../utils/formatToken";
 
 export const QuizzesComp = ({ quizData }) => {
   return (
