@@ -541,6 +541,7 @@ export const QA = ({
   const [inProcess, setInProcess] = useState(false);
 
   const handleCreateQuiz = async (e) => {
+    console.log("function create called")
     const token = localStorage.getItem("token");
     const error = quizData.slides.some(
       (slide) =>

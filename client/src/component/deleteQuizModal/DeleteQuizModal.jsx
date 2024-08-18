@@ -18,7 +18,13 @@ export const DeleteQuizModal = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success(res?.data?.message);
+      toast.success(res?.data?.message,{
+        autoClose: 3000, // Adjust the time if needed
+        pauseOnHover: true,
+        onClose: () => {
+          console.log("Toast closed"); // Debug to see if there's an issue on close
+        },
+      });
       setOpenDeleteQuizModal(false);
     } catch (error) {
       console.log(error);

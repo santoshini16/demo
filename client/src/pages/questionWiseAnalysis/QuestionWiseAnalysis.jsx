@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import newRequest from "../../utils/newRequest";
 import { useParams } from "react-router-dom";
 import formatDate from "../../utils/formatDate";
-import convertToK from "../../utils/convertToK";
+import formatToken from "../../utils/formatToken";
 import { LoadingSVG } from "../../assets/LoadingSvg";
 
 const QuestionWiseAnalysis = () => {
@@ -63,7 +63,7 @@ const QuestionWiseAnalysis = () => {
         </h1>
         <div style={{ fontSize: "14px", color: "red" }}>
           <p>Created on: {formatDate(quizData?.createdAt)}</p>
-          <p>Impressions: {convertToK(quizData?.impressions)}</p>
+          <p>Impressions: {formatToken(quizData?.impressions)}</p>
         </div>
       </div>
 
