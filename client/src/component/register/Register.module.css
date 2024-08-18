@@ -16,7 +16,7 @@
     text-align: right; /* Aligns text to the right */
     font-weight: 700;
     flex: 1; /* Ensures label takes up available space */
-    width: 130px; /* Optional: Adjust as needed */
+    width: 150px; /* Optional: Adjust as needed */
   }
   
   .inputField {
