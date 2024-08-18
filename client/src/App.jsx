@@ -4,6 +4,7 @@ import Home from './pages/home/Home';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './pages/dashboard/Dashboard';
 import Playquiz from './pages/playQuiz/Playquiz';
+import Analytics from './pages/analytics/Analytics';
 function App() {
   return (
     <BrowserRouter>
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route path="/dashboard" element={<Dashboard/>} />
       <Route path="/playquiz/:quizId" element={<Playquiz/>} />
+      <Route path="/analytics" element={<Analytics/>} />
     </Routes>
   </BrowserRouter>
   )
