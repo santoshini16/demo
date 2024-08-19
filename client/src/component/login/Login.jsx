@@ -86,7 +86,9 @@ export const Login = () => {
             placeholder={error.emailErr ? error.emailErr : ""}
             name="email"
             autoComplete="off"
-            className={styles.inputField}
+            className={`${styles.inputField} ${
+              error.emailErr ? styles.error : ""
+            }`}
             onChange={(e) => setEmail(e.target.value)}
            
           />
@@ -103,7 +105,9 @@ export const Login = () => {
             placeholder={error.passwordErr ? error.passwordErr : ""}
             name="password"
             autoComplete="off"
-            className={styles.inputField}
+            className={`${styles.inputField} ${
+              error.passwordErr ? styles.error : ""
+            }`}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
