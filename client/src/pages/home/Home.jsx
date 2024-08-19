@@ -10,29 +10,29 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.auth_container}>
-        <h1>QUIZZIE</h1>
+      <div className={styles.comp_container}>
+        <h1 className={styles.title}>QUIZZIE</h1>
 
-        <div className={styles.activeComp}>
+        <div className={styles.activeAuth}>
           <button
             onClick={() => setActiveAuthComp(0)}
             className={`${styles.register} ${
               JSON.parse(activeAuthComp) === 0 && styles.activeState
-            }`}
+            } ${styles.typography}`}
           >
-            Signup
+            Sign Up
           </button>
           <button
             onClick={() => setActiveAuthComp(1)}
             className={`${styles.login} ${
               JSON.parse(activeAuthComp) === 1 && styles.activeState
-            }`}
+            } ${styles.typography}`}
           >
-            Login
+            Log In
           </button>
         </div>
 
-        <div className={styles.m}>
+        <div className={styles.toggle_comp}>
           {JSON.parse(activeAuthComp) === 0 ? (
             <Register setActiveAuthComp={setActiveAuthComp} />
           ) : (
