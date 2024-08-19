@@ -197,10 +197,10 @@ const Form = ({
               style={{
                 backgroundColor:
                   quizData.slides[activeSlideIdx - 1].correctAnswer === i + 1 &&
-                  "green",
+                  "#60B84B",
                 color:
                   quizData.slides[activeSlideIdx - 1].correctAnswer === i + 1 &&
-                  "white",
+                  "#ffffff",
               }}
               type="text"
               placeholder={optionType === "image" ? "imageUrl" : "text"}
@@ -215,7 +215,7 @@ const Form = ({
                 style={{
                   backgroundColor:
                     quizData.slides[activeSlideIdx - 1].correctAnswer ===
-                      i + 1 && "green",
+                      i + 1 && "#60B84B",
                   color:
                     quizData.slides[activeSlideIdx - 1].correctAnswer ===
                       i + 1 && "white",
@@ -609,6 +609,7 @@ export const QA = ({
       withCloseButton={false}
       centered
       size="lg"
+      className={styles.modal_typo}
     >
       <div className={styles.slideForm}>
         <Slide

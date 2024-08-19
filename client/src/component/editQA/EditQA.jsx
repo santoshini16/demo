@@ -177,7 +177,7 @@ const Form = ({
               style={{
                 backgroundColor:
                   quizData.slides[activeSlideIdx - 1].correctAnswer === i + 1 &&
-                  "green",
+                  "#60B84B",
                 color:
                   quizData.slides[activeSlideIdx - 1].correctAnswer === i + 1 &&
                   "white",
@@ -195,7 +195,7 @@ const Form = ({
                 style={{
                   backgroundColor:
                     quizData.slides[activeSlideIdx - 1].correctAnswer ===
-                      i + 1 && "green",
+                      i + 1 && "#60B84B",
                   color:
                     quizData.slides[activeSlideIdx - 1].correctAnswer ===
                       i + 1 && "white",
