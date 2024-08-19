@@ -268,7 +268,7 @@ const increaseImpressionOnQuiz = async (req, res) => {
 // Get trending quizzes based on impressions
 const getTrendingQuizzes = async (req, res) => {
   try {
-    const trendingQuizzes = await Quiz.find()
+    const trendingQuizzes = await Quiz.find({ impressions: { $gt: 10 } })
       .sort({ impressions: -1 }) // Sort by impressions in descending order
       .limit(10); // Limit to top 10 trending quizzes
 
