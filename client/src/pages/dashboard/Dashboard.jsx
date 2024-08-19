@@ -71,29 +71,29 @@ const Dashboard = () => {
       <div style={{ flex: 5, marginLeft: "13rem" }}>
         <div className={styles.dashboard}>
           <div className={styles.mainContent}>
-            <div className={styles.singleContent} style={{ color: "orange" }}>
+            <div className={`${styles.singleContent} ${styles.quiz}`}>
               <p className={styles.heading}>
-                <span>{dashboardData.totalQuizzesCreatedByUser} </span> Quiz
+                <span>{dashboardData.totalQuizzesCreatedByUser} </span><span className={styles.para}>Quiz</span> 
               </p>
               <p className={styles.para}>Created</p>
             </div>
 
-            <div className={styles.singleContent} style={{ color: "green" }}>
+            <div className={`${styles.singleContent} ${styles.question}`}>
               <p className={styles.heading}>
-                <span>{dashboardData?.totalQuestionCreatedByUser} </span>Questions
+                <span>{dashboardData?.totalQuestionCreatedByUser} </span><span className={styles.para}>Questions</span>
               </p>
               <p className={styles.para}>Created</p>
             </div>
 
-            <div className={styles.singleContent} style={{ color: "blue" }}>
+            <div className={`${styles.singleContent} ${styles.impression}`}>
               <p className={styles.heading}>
-                <span>{formatToken(dashboardData?.totalImpressions)} </span> Total
+                <span>{formatToken(dashboardData?.totalImpressions)} </span><span className={styles.para}>Total</span>
               </p>
               <p className={styles.para}>Impressions</p>
             </div>
           </div>
 
-          <h6 style={{ margin: "4rem 0 3rem 0", fontSize: "2rem" }}>
+          <h6 className={styles.title} style={{ margin: "4rem 0 3rem 1rem" }}>
             Trending Quizzes
           </h6>
 
