@@ -1,27 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 .quizzesComp {
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: white;
-  
-    .content {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-  
-      .quizTitle {
-        font-size: 22px;
-      }
-    }
-  
-    .totalQuizAndIcon {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      color: rgb(244, 123, 3);
-    }
-  
-    .date {
-      color: green;
-      font-weight: 600;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: white;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+.quizzesComp .content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+.quizzesComp .content .quizTitle {
+font-size: 23px;
+line-height: 34.5px;
+color: #474444;
+}
+
+.quizzesComp .totalQuizAndIcon {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #FF5D01;
+  font-size: 16px;
+}
+
+.quizzesComp .date {
+  color: #60B84B;
+  font-weight: 600;
+  font-size: 11px;
+}
