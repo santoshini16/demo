@@ -16,7 +16,7 @@ const Sidebar = () => {
 
   const logoutUser = async () => {
     try {
-      const res = await newRequest.get(`auth/logout`);
+      // const res = await newRequest.get(`auth/logout`);
   
       // Remove token and other user-related data from localStorage
       localStorage.removeItem("token");
@@ -24,7 +24,7 @@ const Sidebar = () => {
       localStorage.removeItem("username");
   
       // Show success message
-      toast.success(res?.data?.message);
+      toast.success("user logout successfully");
   
       // Navigate back to home or login page
       navigate("/");

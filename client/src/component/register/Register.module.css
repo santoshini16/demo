@@ -1,73 +1,81 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-  
-  .form_input {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
-    justify-content: space-between;
-    position: relative;
-  }
-  
-  .label {
-    text-align: right; /* Aligns text to the right */
-    font-weight: 700;
-    flex: 1; /* Ensures label takes up available space */
-    width: 150px; /* Optional: Adjust as needed */
-  }
-  
-  .inputField {
-    width: 380px;
-    height: 38px;
-    border-radius: 10px 10px 0 0;
-    outline: none;
-    padding: 5px 28px 2px 5px;
-    border: none;
-    background-color: #F4F4F4;
-    font-size: 16px;
-  }
-  
-  /* Error styles for input field borders and text */
-  .inputField.error {
-    border: 1px solid #D60000;
-    color: #D60000;
-  }
-  
-  /* Placeholder styling */
-  .inputField::placeholder {
-    color: #474747;
-  }
-  
-  /* Placeholder styling for error state */
-  .inputField.error::placeholder {
-    color: #D60000;
-  }
-  
-  .registerBtnDiv, .loginBtnDiv {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .btn {
-    background-color: var(--blue-btn);
-    border-radius: 8px;
-    border: none;
-    font-size: 16px;
-    padding: 0.6rem 5rem;
-    width: fit-content;
-    font-weight: 700;
-  }
-  
-  .btn:hover {
-    cursor: pointer;
-    filter: brightness(1.09);
-  }
-  
-  .btn:disabled {
-    cursor: not-allowed;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form_input {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  justify-content: space-between;
+  position: relative;
+}
+
+.label {
+  text-align: right; /* Aligns text to the right */
+  font-weight: 700;
+  flex: 1; /* Ensures label takes up available space */
+  width: 150px; /* Optional: Adjust as needed */
+}
+
+.inputField {
+  width: 380px;
+  height: 38px;
+  border-radius: 10px 10px 0 0;
+  outline: none;
+  padding: 5px 28px 2px 5px;
+  border: none;
+  background-color: #F4F4F4;
+  font-size: 16px;
+}
+
+/* Error styles for input field borders and text */
+.inputField.error {
+  border: 1px solid #D60000;
+  color: #D60000;
+}
+
+/* Placeholder styling */
+.inputField::placeholder {
+  color: #474747;
+}
+
+/* Placeholder styling for error state */
+.inputField.error::placeholder {
+  color: #D60000;
+}
+
+.registerBtnDiv, .loginBtnDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  background-color: var(--blue-btn);
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  padding: 0.6rem 5rem;
+  width: fit-content;
+  font-weight: 700;
+}
+
+.btn:hover {
+  cursor: pointer;
+  filter: brightness(1.09);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.errorMessage{
+  color: #D60000;
+ text-align: center;
+}
+p{
+  margin-top: -20px;
+}
   
   

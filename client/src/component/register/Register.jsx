@@ -9,7 +9,6 @@ export const Register = ({ setActiveAuthComp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordStrength, setPasswordStrength] = useState("");
   const [error, setError] = useState({
     nameErr: "",
     emailErr: "",
@@ -19,77 +18,39 @@ export const Register = ({ setActiveAuthComp }) => {
   const [errorResponse, setErrorResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const validateName = (name) => {
-    if (name.length < 3) {
-      return "Invalid name";
-    }
-    return "";
-  };
+  const validateForm = () => {
+    const newErrors = {};
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return "Invalid email";
-    }
-    return "";
-  };
-
-  const validatePassword = (password) => {
-    const strongPasswordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const mediumPasswordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/;
-
-    if (strongPasswordRegex.test(password)) {
-      setPasswordStrength("Strong");
-    } else if (mediumPasswordRegex.test(password)) {
-      setPasswordStrength("Medium");
-    } else {
-      setPasswordStrength("Weak");
-      return "Weak password";
+    if (!username) {
+      newErrors.nameErr = "Invalid name";
     }
 
-    if (password.length < 6) {
-      return "Weak password";
+    if (!email) {
+      newErrors.emailErr = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.emailErr = "Invalid Email";
     }
 
-    return "";
+    if (!password) {
+      newErrors.passwordErr = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.passwordErr = "Weak Password";
+    }
+
+    if (!confirmPassword) {
+      newErrors.confirmPasswordErr = "Confirm Password is required";
+    } else if (confirmPassword !== password) {
+      newErrors.confirmPasswordErr = "Passwords don't match";
+    }
+
+    setError(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const registerUser = async (e) => {
     e.preventDefault();
 
-    let hasError = false;
-    const error = {};
-
-    const nameError = validateName(username);
-    if (nameError) {
-      error.nameErr = nameError;
-      hasError = true;
-    }
-
-    const emailError = validateEmail(email);
-    if (emailError) {
-      error.emailErr = emailError;
-      hasError = true;
-    }
-
-    const passwordError = validatePassword(password);
-    if (passwordError) {
-      error.passwordErr = passwordError;
-      hasError = true;
-    }
-
-    if (!confirmPassword) {
-      error.confirmPasswordErr = "Confirm Password is required!";
-      hasError = true;
-    } else if (password !== confirmPassword) {
-      error.confirmPasswordErr = "Password doesn't match!";
-      hasError = true;
-    }
-
-    if (hasError) {
-      setError(error);
+    if (!validateForm()) {
       return;
     }
 
@@ -102,7 +63,9 @@ export const Register = ({ setActiveAuthComp }) => {
       });
 
       toast.success("User created successfully");
-      setActiveAuthComp(1);
+      setTimeout(() => {
+        setActiveAuthComp(1);  // Adding a delay before switching components
+      }, 1000); 
       setLoading(false);
     } catch (error) {
       setErrorResponse(error?.response?.data?.message);
@@ -124,9 +87,11 @@ export const Register = ({ setActiveAuthComp }) => {
             placeholder={error.nameErr ? error.nameErr : ""}
             name="username"
             autoComplete="off"
-            className={`${styles.inputField} ${error.nameErr ? styles.error : ""}`}
+            className={`${styles.inputField} ${
+              error.nameErr ? styles.error : ""
+            }`}
             onChange={(e) => setUsername(e.target.value)}
-            value={username}
+            value={username} 
           />
         </div>
 
@@ -141,9 +106,11 @@ export const Register = ({ setActiveAuthComp }) => {
             placeholder={error.emailErr ? error.emailErr : ""}
             name="email"
             autoComplete="off"
-            className={`${styles.inputField} ${error.emailErr ? styles.error : ""}`}
+            className={`${styles.inputField} ${
+              error.emailErr ? styles.error : ""
+            }`}
             onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            value={email} 
           />
         </div>
 
@@ -155,15 +122,16 @@ export const Register = ({ setActiveAuthComp }) => {
           <input
             type="password"
             id="password"
-            placeholder={error.passwordErr ? error.passwordErr : ""}
+            placeholder={
+              error.passwordErr ? error.passwordErr : ""
+            }
             name="password"
             autoComplete="off"
-            className={`${styles.inputField} ${error.passwordErr ? styles.error : ""}`}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              validatePassword(e.target.value);
-            }}
-            value={password}
+            className={`${styles.inputField} ${
+              error.passwordErr ? styles.error : ""
+            }`}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password} 
           />
         </div>
 
@@ -176,13 +144,17 @@ export const Register = ({ setActiveAuthComp }) => {
             type="password"
             id="confirm_password"
             placeholder={
-              error.confirmPasswordErr ? error.confirmPasswordErr : ""
+              error.confirmPasswordErr
+                ? error.confirmPasswordErr
+                : ""
             }
             name="confirm_password"
             autoComplete="off"
-            className={`${styles.inputField} ${error.confirmPasswordErr ? styles.error : ""}`}
+            className={`${styles.inputField} ${
+              error.confirmPasswordErr ? styles.error : ""
+            }`}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            value={confirmPassword}
+            value={confirmPassword} 
           />
         </div>
 
@@ -202,6 +174,9 @@ export const Register = ({ setActiveAuthComp }) => {
     </div>
   );
 };
+
+
+
 
 
 
