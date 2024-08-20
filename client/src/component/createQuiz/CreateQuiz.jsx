@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "@mantine/core";
-import styles from "./createQuiz.module.css";
+import styles from "./CreateQuiz.module.css";
 import { QA } from "../QA/QA";
 import { Poll } from "../poll/Poll";
 import { toast, ToastContainer } from 'react-toastify';

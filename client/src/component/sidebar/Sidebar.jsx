@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import styles from "./sidebar.module.css";
+import styles from "./Sidebar.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CreateQuiz } from "../createQuiz/CreateQuiz";
-
-import newRequest from "../../utils/newRequest";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

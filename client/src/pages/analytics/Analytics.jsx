@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styles from "./analytics.module.css";
+import styles from "./Analytics.module.css";
 import newRequest from "../../utils/newRequest";
 import { useSelector } from "react-redux";
-import { LoadingSVG } from "../../assets/LoadingSvg";
+import { LoadingSVG } from "../../data/IconSvgs";
 import MyFunction from "../../component/MyFunction";
 
 const Analytics = () => {

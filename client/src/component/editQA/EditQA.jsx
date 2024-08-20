@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./editQA.module.css";
+import styles from "./EditQA.module.css";
 import { Modal } from "@mantine/core";
 import newRequest from "../../utils/newRequest";
 import { toast, ToastContainer } from 'react-toastify';

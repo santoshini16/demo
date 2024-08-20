@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./register.module.css";
+import styles from "./Register.module.css";
 import newRequest from "../../utils/newRequest";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import styles from "./questionWiseAnalysis.module.css";
+import styles from "./QuestionWiseAnalysis.module.css";
 import { useSelector } from "react-redux";
 import newRequest from "../../utils/newRequest";
 import { useParams } from "react-router-dom";
 import formatDate from "../../utils/formatDate";
 import formatToken from "../../utils/formatToken";
-import { LoadingSVG } from "../../assets/LoadingSvg";
+import { LoadingSVG } from "../../data/IconSvgs";
 
 const QuestionWiseAnalysis = () => {
   const [allQuestionsData, setAllQuestionsData] = useState([]);

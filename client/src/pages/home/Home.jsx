@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./home.module.css";
+import styles from "./Home.module.css";
 import { Register } from "../../component/register/Register";
 import { Login } from "../../component/login/Login";
 import { useAuthComp } from "../../context/AuthComp";
