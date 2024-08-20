@@ -61,7 +61,7 @@ const QuestionWiseAnalysis = () => {
         <h1 style={{ color: "blue" }}>
           {quizData?.quizName} - Question Analysis
         </h1>
-        <div style={{ fontSize: "14px", color: "red" }}>
+        <div style={{ fontSize: "14px", color: "red"}} className={styles.timeline}>
           <p>Created on: {formatDate(quizData?.createdAt)}</p>
           <p>Impressions: {formatToken(quizData?.impressions)}</p>
         </div>
