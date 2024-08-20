@@ -117,7 +117,7 @@ const MyFunction = ({ analytic, i, onDeleteSuccess }) => {
   const [openDeleteQuizModal, setOpenDeleteQuizModal] = useState(false);
 
   const handleShareQuiz = (quizId) => {
-    navigator.clipboard.writeText(`http://localhost:5173/playquiz/${quizId}`)
+    navigator.clipboard.writeText(`https://repo-kappa-eight.vercel.app/playquiz/${quizId}`)
       .then(() => {
         toast.success("Link copied to clipboard");
       })
