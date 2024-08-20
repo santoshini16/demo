@@ -34,7 +34,7 @@
 }
 
 .analytics .tableWrapper table thead th {
-  padding: 1rem 0;
+  padding: 1rem ;
 }
 
 .analytics .tableWrapper table tbody tr:nth-child(odd) {
@@ -61,7 +61,7 @@
 
 .analytics .tableWrapper table tbody tr td {
   text-align: center;
-  padding: 0.3rem 0;
+  padding: 0 1rem;
 }
 
 
