@@ -9,25 +9,27 @@ export const DeleteQuizModal = ({
   openDeleteQuizModal,
   setOpenDeleteQuizModal,
   quId,
+  onDeleteSuccess
 }) => {
   const handleDeleteQuiz = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await newRequest.delete(`api/quiz/${quId}`,{
+      const res = await newRequest.delete(`api/quiz/${quId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success(res?.data?.message,{
-        autoClose: 3000, // Adjust the time if needed
+      toast.success(res?.data?.message, {
+        autoClose: 3000,
         pauseOnHover: true,
         onClose: () => {
           console.log("Toast closed"); // Debug to see if there's an issue on close
         },
       });
-      setOpenDeleteQuizModal(false);
+      onDeleteSuccess(); // Notify parent to update UI
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to delete quiz");
+      console.error(error);
     }
   };
 
@@ -43,7 +45,7 @@ export const DeleteQuizModal = ({
     >
       <div>
         <p className={styles.heading}>
-          Are you confirm you <br />
+          Are you sure you <br />
           want to delete?
         </p>
 

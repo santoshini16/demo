@@ -17,12 +17,11 @@ const Analytics = () => {
       try {
         setLoading(true);
         const token = localStorage.getItem("token");
-        const res = await newRequest.get(`api/quizzes`,{
+        const res = await newRequest.get(`api/quizzes`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(res.data)
         setAnalyticsData(res.data);
         setLoading(false);
       } catch (error) {
@@ -34,7 +33,12 @@ const Analytics = () => {
     if (currentUser) {
       fetchData();
     }
-  }, []);
+  }, [currentUser]);
+
+  // Callback to handle successful quiz deletion
+  const handleDeleteSuccess = (deletedQuizId) => {
+    setAnalyticsData(prevData => prevData.filter(quiz => quiz._id !== deletedQuizId));
+  };
 
   return (
     <div className={styles.analytics}>
@@ -55,7 +59,12 @@ const Analytics = () => {
 
           <tbody>
             {analyticsData?.map((analytic, i) => (
-              <MyFunction analytic={analytic} i={i} key={analytic._id} />
+              <MyFunction
+                analytic={analytic}
+                i={i}
+                key={analytic._id}
+                onDeleteSuccess={handleDeleteSuccess} // Pass the callback here
+              />
             ))}
           </tbody>
         </table>
