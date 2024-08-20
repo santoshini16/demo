@@ -117,7 +117,7 @@ const MyFunction = ({ analytic, i, onDeleteSuccess }) => {
   const [openDeleteQuizModal, setOpenDeleteQuizModal] = useState(false);
 
   const handleShareQuiz = (quizId) => {
-    const baseUrl = import.meta.env.BASE_URL || "http://localhost:5173";
+    const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:5173";
     navigator.clipboard.writeText(`${baseUrl}/playquiz/${quizId}`)
       .then(() => {
         toast.success("Link copied to clipboard");
