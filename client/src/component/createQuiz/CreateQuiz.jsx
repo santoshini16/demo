@@ -133,6 +133,8 @@ const Quiz1 = ({
 
 const QuizCreated = ({ quizType, quizId }) => {
   const baseUrl = import.meta.env.BASE_URL || "http://localhost:5173";
+  console.log(import.meta.env.BASE_URL)
+  
   const localUrl = `${baseUrl}/playquiz/${quizId}`; // Use local URL for now
 
   const shareQuiz = () => {
