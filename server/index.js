@@ -9,7 +9,7 @@ const app = express();
 const dotenv = require('dotenv').config();
 const PORT =  3000
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',  
+    origin: 'http://localhost:5173',  
     credentials: true,                
   }));
 app.use(bodyParser.json());
