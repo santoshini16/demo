@@ -17,9 +17,9 @@ if (!process.env.MONGO_URL) {
 
 // Set CORS with proper configuration
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: ['process.env.CLIENT_URL' , 'http://localhost:5173'],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
@@ -36,10 +36,7 @@ app.use('/api', quizRouter);
 app.use('/api', analyticsRoute);
 
 // MongoDB connection with better error handling
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URL)
 .then(() => {
     console.log('MongoDB connected');
 })
