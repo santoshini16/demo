@@ -4,6 +4,7 @@ import newRequest from "../../utils/newRequest";
 import { useSelector } from "react-redux";
 import { LoadingSVG } from "../../data/IconSvgs";
 import MyFunction from "../../component/MyFunction";
+import Sidebar from "../../component/sidebar/Sidebar"
 
 const Analytics = () => {
   const [analyticsData, setAnalyticsData] = useState([]);
@@ -41,7 +42,9 @@ const Analytics = () => {
   };
 
   return (
-    <div className={styles.analytics}>
+    <div className={styles.layout}>
+      <Sidebar/>
+      <div className={styles.analytics}>
       <h2 className={styles.heading}>Quiz Analysis</h2>
 
       <div className={styles.tableWrapper}>
@@ -80,6 +83,7 @@ const Analytics = () => {
           )
         )}
       </div>
+    </div>
     </div>
   );
 };

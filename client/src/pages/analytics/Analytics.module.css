@@ -1,12 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+.layout{
+  display: flex;
+  overflow-x: hidden;
+}
+
 .analytics {
   background-color: #EDEDED;
   padding: 4rem;
+  min-width: 85.7vw;
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 600;
+  overflow-x: hidden;
 }
 
 .analytics .heading {
@@ -28,11 +35,10 @@
   border-spacing: 0;
 }
 
-.analytics .tableWrapper table thead {
+thead {
   background-color: #5076FF;
   color: white;
 }
-
 .analytics .tableWrapper table thead th {
   padding: 1rem ;
 }

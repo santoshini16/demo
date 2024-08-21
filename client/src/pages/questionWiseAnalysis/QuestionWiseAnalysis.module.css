@@ -2,6 +2,7 @@
   background-color: rgb(226, 225, 225);
   padding: 4rem;
   min-height: 100vh;
+  min-width: 85.7vw;
 }
 
 .container .mainHeading {

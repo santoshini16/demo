@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import formatDate from "../../utils/formatDate";
 import formatToken from "../../utils/formatToken";
 import { LoadingSVG } from "../../data/IconSvgs";
+import Sidebar from "../../component/sidebar/Sidebar";
 
 const QuestionWiseAnalysis = () => {
   const [allQuestionsData, setAllQuestionsData] = useState([]);
@@ -56,6 +57,8 @@ const QuestionWiseAnalysis = () => {
   //   console.log({ quizData });
 
   return (
+    <div style={{display:'flex'}}>
+      <Sidebar/>
     <div className={styles.container}>
       <div className={styles.mainHeading}>
         <h1 style={{ color: "blue" }}>
@@ -151,6 +154,7 @@ const QuestionWiseAnalysis = () => {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 };
