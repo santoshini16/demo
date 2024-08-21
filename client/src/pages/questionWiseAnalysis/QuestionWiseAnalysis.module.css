@@ -1,8 +1,8 @@
 .container {
-  background-color: rgb(226, 225, 225);
+  background-color: #EDEDED;
   padding: 4rem;
   min-height: 100vh;
-  min-width: 85.7vw;
+  /* min-width: 84vw; */
 }
 
 .container .mainHeading {

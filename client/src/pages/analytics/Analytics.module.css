@@ -3,12 +3,13 @@
 .layout{
   display: flex;
   overflow-x: hidden;
+  background-color: #EDEDED;
 }
 
 .analytics {
   background-color: #EDEDED;
   padding: 4rem;
-  min-width: 85.7vw;
+  min-width: 84vw;
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
