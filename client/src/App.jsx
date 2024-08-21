@@ -6,6 +6,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import Playquiz from './pages/playQuiz/Playquiz';
 import Analytics from './pages/analytics/Analytics';
 import QuestionWiseAnalysis from './pages/questionWiseAnalysis/QuestionWiseAnalysis';
+//protected route should work
 function App() {
   return (
     <BrowserRouter>
