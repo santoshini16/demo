@@ -8,7 +8,7 @@ const analyticsRoute = require('./routes/analyticsRoute');
 const app = express();
 const dotenv = require('dotenv').config();
 const PORT =  3000
-
+// console.log(process.env.CLIENT_URL)
 app.use(cors({
     origin: process.env.CLIENT_URL || 'http://localhost:5173',  
     credentials: true,                
