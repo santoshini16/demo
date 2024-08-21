@@ -281,7 +281,7 @@ const QuizCompleted = ({ quizData, quizQuestions, userScore }) => {
         <div>
           <h2
             style={{
-              fontSize: "2rem",
+              fontSize: "1.3rem",
             }}
           >
             Congrats Quiz is completed
