@@ -281,7 +281,7 @@ const QuizCompleted = ({ quizData, quizQuestions, userScore }) => {
         <div>
           <h2
             style={{
-              fontSize: "1.7rem",
+              fontSize: "1.9rem",
             }}
           >
             Congrats Quiz is completed
@@ -297,7 +297,7 @@ const QuizCompleted = ({ quizData, quizQuestions, userScore }) => {
 
           <p
             style={{
-              fontSize: "2rem",
+              fontSize: "1.9rem",
               fontWeight: 600,
               textAlign: "center",
             }}
