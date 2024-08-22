@@ -217,7 +217,7 @@ const StartQuiz = ({ setShowComp, quizData, quizQuestions, setUserScore }) => {
             }}
           >
             {quizData?.optionType === "text" && (
-              <div style={{ padding: "0.2rem 6rem" }}>{o.text}</div>
+              <div style={{ padding: "0.05rem 7rem" }}>{o.text}</div>
             )}
 
             {quizData?.optionType === "image" && (
