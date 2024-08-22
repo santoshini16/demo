@@ -217,7 +217,7 @@ const StartQuiz = ({ setShowComp, quizData, quizQuestions, setUserScore }) => {
             }}
           >
             {quizData?.optionType === "text" && (
-              <div style={{ padding: "1rem 4rem" }}>{o.text}</div>
+              <div style={{ padding: "0.5rem 4rem" }}>{o.text}</div>
             )}
 
             {quizData?.optionType === "image" && (
@@ -290,6 +290,7 @@ const QuizCompleted = ({ quizData, quizQuestions, userScore }) => {
             style={{
               display: "flex",
               justifyContent: "center",
+              gap:"0.5rem"
             }}
           >
             <img src={CongratulationsImg} alt="congratulationsImg" />
