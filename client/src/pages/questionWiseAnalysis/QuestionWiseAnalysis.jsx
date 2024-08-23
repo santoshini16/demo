@@ -57,7 +57,7 @@ const QuestionWiseAnalysis = () => {
   //   console.log({ quizData });
 
   return (
-    <div style={{display:'flex',backgroundColor:'#EDEDED'}}>
+    <div className={styles.layout}>
       <Sidebar/>
     <div className={styles.container}>
       <div className={styles.mainHeading}>

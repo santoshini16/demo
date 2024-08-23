@@ -1,8 +1,12 @@
+.layout{
+  display:flex;
+  background-color:#EDEDED;
+}
 .container {
   background-color: #EDEDED;
   padding: 4rem;
   min-height: 100vh;
-  /* min-width: 84vw; */
+  width: 83%;
 }
 
 .container .mainHeading {
