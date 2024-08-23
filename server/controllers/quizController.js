@@ -1,13 +1,15 @@
 const Quiz = require('../model/quiz');
 const Question = require('../model/question');
+const User = require('../model/user')
 
 // Create a new quiz
 const createQuiz = async (req, res) => {
   try {
     const { quizName, quizType, timer, optionType, questions } = req.body;
 
-    const user = req.user;
-    if (!user) {
+    const userId = req.user?.userId; // Extract userId from req.user
+
+    if (!userId) {
       return res.status(404).json({ message: "User not found!" });
     }
 
@@ -37,15 +39,28 @@ const createQuiz = async (req, res) => {
       })
     );
 
+    console.log("create quiz user:", userId);
+
     // Create the quiz with the question IDs
     const newQuiz = await Quiz.create({
-      userId: user._id,
+      userId,
       quizName,
       quizType,
       timer: timer || 0, // Default to 0 if not provided
       optionType,
       questions: questionIds,
     });
+
+    // Fetch the user from the database
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found in the database!" });
+    }
+
+    // Update the user's quizzes array
+    user.quizzes.push(newQuiz._id);
+    await user.save(); // Save the updated user
 
     // Return the created quiz
     return res.status(201).json(newQuiz);
@@ -268,9 +283,19 @@ const increaseImpressionOnQuiz = async (req, res) => {
 // Get trending quizzes based on impressions
 const getTrendingQuizzes = async (req, res) => {
   try {
-    const trendingQuizzes = await Quiz.find({ impressions: { $gt: 10 } })
-      .sort({ impressions: -1 }) // Sort by impressions in descending order
-      .limit(10); // Limit to top 10 trending quizzes
+    const user = req.user;
+    if (!user) {
+      return res.status(404).json({ message: "User not found!" });
+    }
+
+    const userId = user.userId; 
+
+    const trendingQuizzes = await Quiz.find({ 
+        userId, 
+        impressions: { $gt: 10 } 
+      })
+      .sort({ impressions: -1 }) 
+      .limit(10); 
 
     return res.status(200).json(trendingQuizzes);
   } catch (error) {
@@ -278,6 +303,7 @@ const getTrendingQuizzes = async (req, res) => {
     return res.status(500).json({ message: "Internal server error." });
   }
 };
+
 
 module.exports = {
   createQuiz,

@@ -1,5 +1,6 @@
 const Quiz = require('../model/quiz');
 const Question = require('../model/question');
+const mongoose = require('mongoose')
 
 // Utility function for creating custom error responses
 const createError = (status, message) => {
@@ -12,12 +13,12 @@ const createError = (status, message) => {
 const getAllMyQuizzes = async (req, res, next) => {
   try {
     const user = req.user;
-
+   
     if (!user) {
       return next(createError(404, "User not found!"));
     }
 
-    const quizzes = await Quiz.find({ userId: user._id });
+    const quizzes = await Quiz.find({ userId: user.userId });
     res.status(200).json(quizzes);
   } catch (error) {
     next(error);
@@ -78,56 +79,60 @@ const getAllQuestionsOfAQuiz = async (req, res, next) => {
   }
 };
 
-// Get dashboard information
-const getDashboardInfo = async (req, res, next) => {
+const getDashboardInfo = async (req, res) => {
   try {
     const user = req.user;
-    if (!user) return next(createError(404, "User not found!"));
+    console.log("dashboard user:", user);
 
-    const totalQuizzesCreatedByUser = await Quiz.countDocuments({
-      userId: user._id,
-    });
+    if (!user || !user.userId) {
+      return res.status(404).json({ message: "User not found!" });
+    }
 
+    // Directly use userId in queries assuming it's a string
+    const userId = new mongoose.Types.ObjectId(user.userId);
+    console.log("userId:", userId);
+
+    // 1. Count total quizzes created by user
+    const totalQuizzesCreatedByUser = await Quiz.countDocuments({ userId });
+    console.log("Total quizzes created by user:", totalQuizzesCreatedByUser);
+
+    // 2. Aggregate total questions created by user using $lookup
     const totalQuestionCreatedByUser = await Quiz.aggregate([
+      { $match: { userId } }, // Use userId directly if it's a string
       {
-        $match: {
-          userId: user._id,
+        $lookup: {
+          from: 'questions', // Ensure this matches the collection name exactly
+          localField: 'questions',
+          foreignField: '_id',
+          as: 'questionDetails',
         },
       },
-      {
-        $unwind: "$questions",
-      },
-      {
-        $group: {
-          _id: null,
-          numberOfQuestions: { $sum: 1 },
-        },
-      },
+      { $unwind: '$questionDetails' },
+      { $group: { _id: null, numberOfQuestions: { $sum: 1 } } },
     ]);
+    console.log("Total questions created by user:", totalQuestionCreatedByUser);
 
+    // 3. Aggregate total impressions of a user's quizzes
     const totalImpressionsOfAUser = await Quiz.aggregate([
-      {
-        $match: {
-          userId: user._id,
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          impressionSum: { $sum: "$impressions" },
-        },
-      },
+      { $match: { userId } }, // Use userId directly if it's a string
+      { $group: { _id: null, impressionSum: { $sum: '$impressions' } } },
     ]);
+    console.log("Total impressions of user:", totalImpressionsOfAUser);
 
+    // 4. Respond with the aggregated data
     res.status(200).json({
       totalQuizzesCreatedByUser,
       totalQuestionCreatedByUser: totalQuestionCreatedByUser[0]?.numberOfQuestions || 0,
       totalImpressions: totalImpressionsOfAUser[0]?.impressionSum || 0,
     });
+
   } catch (error) {
-    next(error);
+    console.error("Error in getDashboardInfo:", error);
+    res.status(500).json({ message: "Internal server error." });
   }
 };
+
+
 
 module.exports = {
   getAllMyQuizzes,
