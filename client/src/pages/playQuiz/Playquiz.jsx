@@ -217,11 +217,12 @@ const StartQuiz = ({ setShowComp, quizData, quizQuestions, setUserScore }) => {
             }}
           >
             {quizData?.optionType === "text" && (
-              <div style={{ padding: "0.05rem 7rem" }}>{o.text}</div>
+              <div className={styles.txtOption}>{o.text}</div>
             )}
 
             {quizData?.optionType === "image" && (
-              <img
+              <div className={styles.imgOption}>
+                  <img
                 src={o?.text}
                 style={{
                   height: "8rem",
@@ -231,6 +232,7 @@ const StartQuiz = ({ setShowComp, quizData, quizQuestions, setUserScore }) => {
                 }}
                 alt=""
               />
+              </div>
             )}
 
             {quizData?.optionType === "textImage" && (

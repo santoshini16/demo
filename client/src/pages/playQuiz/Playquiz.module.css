@@ -62,7 +62,7 @@
 
 .questionText {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 600;
   padding: 1rem 0;
 }
 
@@ -85,6 +85,9 @@
   justify-content: center;
   align-items: center;
 }
+.txtOption{
+  padding: 0.6rem 5rem;
+}
 
 .nextBtnDiv {
   display: flex;
@@ -96,7 +99,7 @@
   all: unset;
   width: 40%;
   text-align: center;
-  padding: 0.5rem 7rem;
+  padding: 0.5rem 0rem;
   font-size: 1.4rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 8px;
   border-radius: 8px;
@@ -142,6 +145,18 @@
       display: grid !important;
       grid-template-columns: repeat(1, 1fr) !important;
       gap: 2rem !important;
+  }
+  .optionBox{
+    padding: 0rem;
+  }
+  .txtOption{
+    padding: 0.1rem 6rem;
+  }
+  .nextBtn{
+    padding: 0.4rem 1.7rem;
+  }
+  .optionBox .imgOption{
+    padding: 0.2rem;
   }
 }
 
